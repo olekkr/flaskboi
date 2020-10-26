@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, url_for, render_template, request
 from markupsafe import escape 
 
 
@@ -20,15 +20,20 @@ def profile(username):
 @app.route('/fart')
 def test():
     print(10)
-    return render_template('template.html', name = "")
+    return render_template('template.html', name = '')
 
 @app.route('/xss=<input>')
 def xss(input):
     print(input)
     return render_template('template.html', name = input)
  
-with app.test_request_context():
-    print(url_for('index'))
-    print(url_for('login'))
-    print(url_for('login', next='/'))
-    print(url_for('profile', username='John Doe'))
+@app.route('/form/', methods=['GET', 'POST'])
+def form():
+    if request.method == 'GET':
+        
+        return render_template('forms.html')
+    else:
+        print(request.form.get("username"), request.form.get("password"))
+        return ""
+
+
