@@ -30,9 +30,8 @@ def xss(input):
 @app.route('/form/', methods=['GET', 'POST'])
 def form():
     if request.method == 'GET':
-        
         return render_template('forms.html')
-    else:
+    elif request.method == 'post':
         print(request.form.get("username"), request.form.get("password"))
         return ""
 
